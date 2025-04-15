@@ -1,14 +1,25 @@
 import CustomSocialButton from "@/app/components/forms/theme-elements/CustomSocialButton";
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import { signInType } from "@/app/(DashboardLayout)/types/auth/auth";
+import { signIn } from 'next-auth/react';
 
-const AuthSocialButtons = ({ title }: signInType) => (
-  <>
+const AuthSocialButtons = ({ title }: signInType) => {
+  const handleGoogleSignIn = async () => {
+    await signIn('google');
+  };
+  const handleGithubSignIn = async () => {
+    await signIn('github');
+  };
+  return (<>
     <Grid container spacing={3} sx={{ mt: 3 }}>
-      <Grid item xs={12} sm={6}>
-        <CustomSocialButton fullWidth>
+      <Grid
+        size={{
+          xs: 12,
+          sm: 6
+        }}>
+        <CustomSocialButton fullWidth onClick={handleGoogleSignIn}>
           <Avatar
             src={"/images/svgs/google-icon.svg"}
             alt={"icon1"}
@@ -31,14 +42,18 @@ const AuthSocialButtons = ({ title }: signInType) => (
           Google
         </CustomSocialButton>
       </Grid>
-      <Grid item xs={12} sm={6}>
-        <CustomSocialButton fullWidth>
+      <Grid
+        size={{
+          xs: 12,
+          sm: 6
+        }}>
+        <CustomSocialButton fullWidth onClick={handleGithubSignIn}>
           <Avatar
-            src={"/images/svgs/facebook-icon.svg"}
+            src={"/images/svgs/git-icon.svg"}
             alt={"icon2"}
             sx={{
-              width: 25,
-              height: 25,
+              width: 16,
+              height: 16,
               borderRadius: 0,
               mr: 1,
             }}
@@ -52,11 +67,11 @@ const AuthSocialButtons = ({ title }: signInType) => (
           >
             {title}{" "}
           </Box>{" "}
-          FB
+          Github
         </CustomSocialButton>
       </Grid>
     </Grid>
-  </>
-);
+  </>);
+};
 
 export default AuthSocialButtons;

@@ -16,6 +16,7 @@ import {
 import Scrollbar from "@/app/components/custom-scroll/Scrollbar";
 import { AppState } from "@/store/store";
 import { Icon } from "@iconify/react";
+import { useSession, signOut } from "next-auth/react"
 
 export default function Sidebar() {
   const lgUp = useMediaQuery((theme: any) => theme.breakpoints.down("lg"));
@@ -36,6 +37,7 @@ export default function Sidebar() {
   const onHoverLeave = () => {
     dispatch(hoverSidebar(false));
   };
+  const { data: session } = useSession()
 
   return (
     <>
@@ -113,15 +115,15 @@ export default function Sidebar() {
                   >
                     <Box display="flex" alignItems="center">
                       <Avatar
-                        src={"/images/profile/user1.jpg"}
+                        src={"/images/profile/user5.jpg"}
                         sx={{ width: 45, height: 45 }}
                       />
                       <Box ml={2}>
-                        <Typography variant="h5">Mike</Typography>
+                        <Typography variant="h5">{session?.user?.name}</Typography>
                         <Typography variant="subtitle1">Admin</Typography>
                       </Box>
                     </Box>
-                    <IconButton color="primary" href="/auth/auth1/login">
+                    <IconButton color="primary" onClick={() => signOut()}>
                       <Icon
                         icon="solar:logout-line-duotone"
                         width={24}

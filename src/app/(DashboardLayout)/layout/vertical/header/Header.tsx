@@ -18,7 +18,9 @@ import Search from "./Search";
 import Language from "./Language";
 import { AppState } from "@/store/store";
 import { shadows } from "@/utils/theme/Shadows";
+import React from "react";
 import { IconButton } from '@mui/material';
+
 
 const Header = () => {
   const lgUp = useMediaQuery((theme: any) => theme.breakpoints.up("lg"));
@@ -88,7 +90,6 @@ const Header = () => {
               <Icon icon="solar:sun-2-line-duotone" width="21" height="21" onClick={() => dispatch(setDarkMode('light'))} />
             )}
           </IconButton>
-
           <Notifications />
           <Profile />
         </Stack>

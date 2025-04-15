@@ -312,6 +312,11 @@ const Customizer: FC = () => {
                     height={24}
                   />
                 </Box>
+                {/* <ViewComfyTwoTone
+                  color={
+                    customizer.isHorizontal === false ? "primary" : "inherit"
+                  }
+                /> */}
                 Vertical
               </StyledBox>
               <StyledBox
@@ -335,6 +340,11 @@ const Customizer: FC = () => {
                     height={24}
                   />
                 </Box>
+                {/* <PaddingTwoTone
+                  color={
+                    customizer.isHorizontal === true ? "primary" : "inherit"
+                  }
+                /> */}
                 Horizontal
               </StyledBox>
             </Stack>
@@ -367,6 +377,11 @@ const Customizer: FC = () => {
                     height={24}
                   />
                 </Box>
+                {/* <CallToActionTwoToneIcon
+                  color={
+                    customizer.isLayout === "boxed" ? "primary" : "inherit"
+                  }
+                /> */}
                 Boxed
               </StyledBox>
               <StyledBox
@@ -390,6 +405,9 @@ const Customizer: FC = () => {
                     height={24}
                   />
                 </Box>
+                {/* <AspectRatioTwoToneIcon
+                  color={customizer.isLayout === "full" ? "primary" : "inherit"}
+                /> */}
                 Full
               </StyledBox>
             </Stack>
@@ -429,6 +447,9 @@ const Customizer: FC = () => {
                         height={24}
                       />
                     </Box>
+                    {/* <WebAssetTwoToneIcon
+                      color={!customizer.isCollapse ? "primary" : "inherit"}
+                    /> */}
                     Full
                   </StyledBox>
                   <StyledBox
@@ -451,6 +472,9 @@ const Customizer: FC = () => {
                         height={24}
                       />
                     </Box>
+                    {/* <ViewSidebarTwoToneIcon
+                      color={customizer.isCollapse ? "primary" : "inherit"}
+                    /> */}
                     Collapse
                   </StyledBox>
                 </Stack>
@@ -481,6 +505,9 @@ const Customizer: FC = () => {
                     height={24}
                   />
                 </Box>
+                {/* <BorderOuter
+                  color={!customizer.isCardShadow ? "primary" : "inherit"}
+                /> */}
                 Border
               </StyledBox>
               <StyledBox
@@ -503,6 +530,10 @@ const Customizer: FC = () => {
                     height={24}
                   />
                 </Box>
+
+                {/* <CallToActionTwoToneIcon
+                  color={customizer.isCardShadow ? "primary" : "inherit"}
+                /> */}
                 Shadow
               </StyledBox>
             </Stack>

@@ -1,4 +1,3 @@
-'use client'
 import Card from '@mui/material/Card';
 import { useSelector } from '@/store/hooks';
 import { AppState } from '@/store/store';

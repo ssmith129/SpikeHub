@@ -4,30 +4,30 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import Menu from '@mui/material/Menu';
 import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Icon } from "@iconify/react";
-
+import { useSession, signOut } from "next-auth/react"
 import { Stack } from "@mui/system";
 
 const profile = [
   {
-    href: "/apps/user-profile/profile",
+    href: "/",
     title: "My Profile",
     subtitle: "Account Settings",
     icon: <Icon icon="solar:wallet-2-line-duotone" width="20" height="20" />,
     color: "primary",
   },
   {
-    href: "/apps/email",
+    href: "/",
     title: "My Inbox",
     subtitle: "Messages & Emails",
     icon: <Icon icon="solar:shield-minimalistic-line-duotone" width="20" height="20" />,
     color: "success",
   },
   {
-    href: "/apps/notes",
+    href: "/",
     title: "My Tasks",
     subtitle: "To-do and Daily Tasks",
     icon: <Icon icon="solar:card-2-line-duotone" width="20" height="20" />,
@@ -46,6 +46,7 @@ const Profile = () => {
   const handleClose2 = () => {
     setAnchorEl2(null);
   };
+  const { data: session } = useSession()
 
   return (
     <Box>
@@ -65,7 +66,7 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src={"/images/profile/user1.jpg"}
+          src={"/images/profile/user5.jpg"}
           alt={"ProfileImg"}
           sx={{
             width: 45,
@@ -74,7 +75,7 @@ const Profile = () => {
         />
         
         {lgUp ? <Box textAlign="left">
-          <Typography variant="h6" color="textPrimary" display="flex" alignItems="center"> Mike Nielsen</Typography>
+          <Typography variant="h6" color="textPrimary" display="flex" alignItems="center"> {session?.user?.name}</Typography>
           <Typography variant="subtitle2" color="textSecondary"> Admin</Typography>
         </Box> : ""}
       </Button>
@@ -99,13 +100,13 @@ const Profile = () => {
         <Typography variant="h5">User Profile</Typography>
         <Stack direction="row" py={3} spacing={2} alignItems="center">
           <Avatar
-            src={"/images/profile/user1.jpg"}
+            src={"/images/profile/user5.jpg"}
             alt={"ProfileImg"}
             sx={{ width: 95, height: 95 }}
           />
           <Box>
             <Typography variant="h6" color="textPrimary" fontWeight={600}>
-            Mike Nielsen
+            {session?.user?.name}
             </Typography>
             <Typography variant="subtitle2" color="textSecondary">
             Admin
@@ -176,6 +177,7 @@ const Profile = () => {
             color="primary"
             component={Link}
             fullWidth
+            onClick={() => signOut()}
           >
             Log out
           </Button>

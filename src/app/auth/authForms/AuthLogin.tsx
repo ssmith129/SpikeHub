@@ -1,97 +1,135 @@
 import Box from '@mui/material/Box';
+import { useState } from "react";
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { TextField, Alert } from "@mui/material";
 import Link from "next/link";
 import { loginType } from "@/app/(DashboardLayout)/types/auth/auth";
 import CustomCheckbox from "@/app/components/forms/theme-elements/CustomCheckbox";
 import CustomTextField from "@/app/components/forms/theme-elements/CustomTextField";
 import CustomFormLabel from "@/app/components/forms/theme-elements/CustomFormLabel";
 import AuthSocialButtons from "./AuthSocialButtons";
+import { signIn, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
-const AuthLogin = ({ title, subtitle, subtext }: loginType) => (
+const AuthLogin = ({ title, subtitle, subtext }: loginType) => {
+  const { data: session } = useSession();
+  const [username, setUsername] = useState("admin");
+  const [password, setPassword] = useState("admin123");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const result = await signIn("credentials", {
+      redirect: false,
+      username,
+      password,
+    });
+    if (result?.error) {
+      // Handle successful sign-in
+      setError(result.error);
+    }
+  };
+  if (session) {
+    return redirect("/");
+  }
+ return(
   <>
-    {title ? (
-      <Typography fontWeight="700" variant="h2" mb={1}>
-        {title}
+  {title ? (
+    <Typography fontWeight="700" variant="h2" mb={1}>
+      {title}
+    </Typography>
+  ) : null}
+
+  {subtext}
+
+  <AuthSocialButtons title="Sign in with" />
+  <Box mt={3}>
+    <Divider>
+      <Typography
+        component="span"
+        color="textSecondary"
+        variant="h6"
+        fontWeight="400"
+        position="relative"
+        px={2}
+      >
+        or sign in with
       </Typography>
-    ) : null}
+    </Divider>
+  </Box>
 
-    {subtext}
+  {error ? (
+        <Box mt={3}>
+          <Alert severity="error">
+            Sign-in error: Username or Password is Wrong
+          </Alert>
+        </Box>
+      ) : (
+        ""
+      )}
 
-    <AuthSocialButtons title="Sign in with" />
-    <Box mt={3}>
-      <Divider>
-        <Typography
-          component="span"
-          color="textSecondary"
-          variant="h6"
-          fontWeight="400"
-          position="relative"
-          px={2}
-        >
-          or sign in with
-        </Typography>
-      </Divider>
-    </Box>
-
-    <Stack>
-      <Box>
-        <CustomFormLabel htmlFor="username">Username</CustomFormLabel>
-        <CustomTextField id="username" variant="outlined" fullWidth />
-      </Box>
-      <Box>
-        <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
-        <CustomTextField
-          id="password"
-          type="password"
-          variant="outlined"
-          fullWidth
-        />
-      </Box>
-      <Stack
-        justifyContent="space-between"
-        direction={{ xs: 'column', sm: 'row' }}
-        alignItems="center"
-        my={2}
-      >
-        <FormGroup>
-          <FormControlLabel
-            control={<CustomCheckbox defaultChecked />}
-            label="Remeber this Device"
-          />
-        </FormGroup>
-        <Typography
-          component={Link}
-          href="/auth/auth1/forgot-password"
-          fontWeight="500"
-          sx={{
-            textDecoration: "none",
-            color: "primary.main",
-          }}
-        >
-          Forgot Password ?
-        </Typography>
-      </Stack>
-    </Stack>
+<form onSubmit={handleSubmit}>
+<Stack>
     <Box>
-      <Button
-        color="primary"
-        variant="contained"
-        size="large"
-        fullWidth
-        component={Link}
-        href="/"
-        type="submit"
-      >
-        Sign In
-      </Button>
+      <CustomFormLabel htmlFor="username">Username</CustomFormLabel>
+      <TextField id="username" variant="outlined" error={error !== ''} value={username} fullWidth onChange={(e) => setUsername(e.target.value)} />
     </Box>
-    {subtitle}
-  </>
-);
+    <Box>
+      <CustomFormLabel htmlFor="password">Password</CustomFormLabel>
+      <TextField
+              id="password"
+              type="password"
+              variant="outlined"
+              fullWidth error={error !== ''}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+    </Box>
+    <Stack
+      justifyContent="space-between"
+      direction={{ xs: 'column', sm: 'row' }}
+      alignItems="center"
+      my={2}
+    >
+      <FormGroup>
+        <FormControlLabel
+          control={<CustomCheckbox defaultChecked />}
+          label="Remeber this Device"
+        />
+      </FormGroup>
+      <Typography
+        component={Link}
+        href="/auth/auth1/forgot-password"
+        fontWeight="500"
+        sx={{
+          textDecoration: "none",
+          color: "primary.main",
+        }}
+      >
+        Forgot Password ?
+      </Typography>
+    </Stack>
+  </Stack>
+  <Box>
+    <Button
+      color="primary"
+      variant="contained"
+      size="large"
+      fullWidth
+      type="submit"
+    >
+      Sign In
+    </Button>
+  </Box>
+</form>
+  {subtitle}
+</>
+ )
+};
 
 export default AuthLogin;

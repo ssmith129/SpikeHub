@@ -51,8 +51,10 @@ export default function NavItem({
 }: ItemType) {
   const lgDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));
   const customizer = useSelector((state: AppState) => state.customizer);
+  //const Icon = item?.icon;
   const theme = useTheme();
   const { t } = useTranslation();
+  //const itemIcon = level > 1 ? <Icon size={24} /> : <Icon size="1.5rem" />;
 
   const ListItemStyled = styled(ListItemButton)(() => ({
     whiteSpace: "nowrap",
@@ -98,11 +100,15 @@ export default function NavItem({
       borderRadius: "8px",
       marginRight: "8px",
       transition: "all .3s ease-in-out",
+      // color: item.children ? "" : theme.palette.primary.main,
+      // backgroundColor: item.children ? "" : theme.palette.primary.light,
     },
     "&:hover": {
       backgroundColor: "transparent !important",
+      //color: theme.palette.primary.main,
     },
     "&.Mui-selected": {
+      //color: theme.palette.text.primary,
      backgroundColor: "transparent !important",
       ".MuiListItemIcon-root": {
         color: theme.palette.primary.main,
@@ -112,6 +118,7 @@ export default function NavItem({
         width: "calc(100% + 16px)",
       },
       "&:hover": {
+        // backgroundColor: theme.palette.primary.light,
         color: theme.palette.text.primary,
       },
     },
@@ -133,6 +140,7 @@ export default function NavItem({
     <List component="li" disablePadding key={item?.id && item.title}>
       <Link href={item.href}>
         <ListItemStyled
+          // {...listItemProps}
           disabled={item?.disabled}
           selected={pathDirect === item?.href}
           onClick={lgDown ? onClick : undefined}
@@ -140,11 +148,16 @@ export default function NavItem({
             "&:hover": {
               ".MuiListItemIcon-root": {
                 color: item.bgcolor + ".main",
+                //backgroundColor: level < 2 ? menu.bgcolor + ".light" : "",
               },
             },
             "&:hover::before": {
               backgroundColor: item.bgcolor + ".light",
             },
+            // ".MuiListItemIcon-root": {
+            //   color: item.bgcolor + ".main",
+            //   backgroundColor: item.bgcolor + ".light",
+            // },
             "&.Mui-selected": {
               color:
                 level > 1
@@ -193,6 +206,7 @@ export default function NavItem({
             ) : (
               <Icon icon={"solar:" + item.icon} width="24" height="24" />
             )}
+            {/* {itemIcon} */}
           </ListItemIcon>
           <ListItemText>
             {hideMenu ? "" : <>{t(`${item?.title}`)}</>}

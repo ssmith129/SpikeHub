@@ -1,4 +1,3 @@
-'use client'
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -12,11 +11,10 @@ import { AppState } from '@/store/store';
 type Props = {
   title: string;
   footer?: string | JSX.Element;
-  codeModel?: any | any[];
   children: JSX.Element;
 };
 
-const ParentCard = ({ title, children, footer, codeModel }: Props) => {
+const ParentCard = ({ title, children, footer }: Props) => {
   const customizer = useSelector((state: AppState) => state.customizer);
 
   const theme = useTheme();
@@ -28,7 +26,7 @@ const ParentCard = ({ title, children, footer, codeModel }: Props) => {
       elevation={customizer.isCardShadow ? 9 : 0}
       variant={!customizer.isCardShadow ? 'outlined' : undefined}
     >
-      <CardHeader title={title} action={codeModel} />
+      <CardHeader title={title} />
       <Divider />
 
       <CardContent>{children}</CardContent>

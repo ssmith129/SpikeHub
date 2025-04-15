@@ -1,7 +1,7 @@
 "use client";
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import { Theme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -16,7 +16,7 @@ export default function TwoSteps() {
   const customizer = useSelector((state: AppState) => state.customizer);
 
   return (
-    <PageContainer title="Two Steps Page" description="this is Sample page">
+    (<PageContainer title="Two Steps Page" description="this is Sample page">
       <Box display="flex" alignItems="center">
         <Box
           position="relative"
@@ -99,7 +99,11 @@ export default function TwoSteps() {
                   sx={{ mb: 4 }}
                 >
                   {lgUp ? (
-                    <Grid item xs={12} sm={6}>
+                    <Grid
+                      size={{
+                        xs: 12,
+                        sm: 6
+                      }}>
                       <Avatar
                         src="/images/backgrounds/login3-bg.png"
                         alt="login"
@@ -115,7 +119,12 @@ export default function TwoSteps() {
                   ) : (
                     ""
                   )}
-                  <Grid item xs={12} sm={6} lg={5}>
+                  <Grid
+                    size={{
+                      xs: 12,
+                      sm: 6,
+                      lg: 5
+                    }}>
                     <Box
                       sx={{
                         marginLeft: {
@@ -149,6 +158,7 @@ export default function TwoSteps() {
           </Box>
         </Box>
       </Box>
-    </PageContainer>
+    </PageContainer>)
   );
 }
+

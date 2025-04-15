@@ -8,6 +8,8 @@ import Sidebar from "./layout/vertical/sidebar/Sidebar";
 import Customizer from "./layout/shared/customizer/Customizer";
 import Navigation from "./layout/horizontal/navbar/Navigation";
 import HorizontalHeader from "./layout/horizontal/header/Header";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import { useSelector } from "@/store/hooks";
 import { AppState } from "@/store/store";
 
@@ -34,6 +36,8 @@ export default function RootLayout({
   const customizer = useSelector((state: AppState) => state.customizer);
   const theme = useTheme();
 
+  const { data: session } = useSession();
+
   const MainWrapper = styled("div")(() => ({
     display: "flex",
     minHeight: "100vh",
@@ -41,68 +45,77 @@ export default function RootLayout({
     padding: customizer.isHorizontal ? 0 : "20px",
   }));
 
-  return (
-    <MainWrapper>
-      <title>Spike NextJs 14.0.3</title>
-      {/* ------------------------------------------- */}
-      {/* Main Wrapper */}
-      {/* ------------------------------------------- */}
-      <Box width="100%">
+  if(session){
+    return (
+      <MainWrapper>
+        <title>Spike NextJs 14.0.3</title>
         {/* ------------------------------------------- */}
-        {/* Sidebar */}
+        {/* Main Wrapper */}
         {/* ------------------------------------------- */}
-        {customizer.isHorizontal ? "" : <Sidebar />}
-
-        {customizer.isHorizontal ? <HorizontalHeader /> : ""}
-
-        {customizer.isHorizontal ? <Navigation /> : ""}
-        <PageWrapper
-          className="page-wrapper"
-          sx={{
-            ...(customizer.isCollapse && {
-              [theme.breakpoints.up("lg")]: {
-                ml: `${customizer.MiniSidebarWidth}px`,
-              },
-            }),
-            ...(!customizer.isCollapse &&
-              !customizer.isHorizontal && {
+        <Box width="100%">
+          {/* PageContent */}
+  
+          {/* ------------------------------------------- */}
+          {/* Sidebar */}
+          {/* ------------------------------------------- */}
+          {customizer.isHorizontal ? "" : <Sidebar />}
+  
+          {customizer.isHorizontal ? <HorizontalHeader /> : ""}
+  
+          {customizer.isHorizontal ? <Navigation /> : ""}
+          <PageWrapper
+            className="page-wrapper"
+            sx={{
+              ...(customizer.isCollapse && {
                 [theme.breakpoints.up("lg")]: {
-                  ml: `${customizer.SidebarWidth}px`,
+                  ml: `${customizer.MiniSidebarWidth}px`,
                 },
               }),
-          }}
-        >
-          <Container
-            sx={{
-              maxWidth:
-                customizer.isLayout === "boxed" ? "lg" : "100%!important",
+              ...(!customizer.isCollapse &&
+                !customizer.isHorizontal && {
+                  [theme.breakpoints.up("lg")]: {
+                    ml: `${customizer.SidebarWidth}px`,
+                  },
+                }),
             }}
           >
-            {/* ------------------------------------------- */}
-            {/* Header */}
-            {/* ------------------------------------------- */}
-            {customizer.isHorizontal ? " " : <Header />}
-
-            {/* ------------------------------------------- */}
-            {/* PageContent */}
-            {/* ------------------------------------------- */}
-
-            <Box
+            <Container
               sx={{
-                minHeight: "calc(100vh - 170px)",
-                py: { sm: 3 },
+                maxWidth:
+                  customizer.isLayout === "boxed" ? "lg" : "100%!important",
               }}
             >
-              {children}
-            </Box>
+              {/* ------------------------------------------- */}
+              {/* Header */}
+              {/* ------------------------------------------- */}
+              {customizer.isHorizontal ? " " : <Header />}
+  
+              {/* ------------------------------------------- */}
+              {/* PageContent */}
+              {/* ------------------------------------------- */}
+  
+              <Box
+                sx={{
+                  minHeight: "calc(100vh - 170px)",
+  
+                  py: { sm: 3 },
+                }}
+              >
+                {/* <Outlet /> */}
+                {children}
+                {/* <Index /> */}
+              </Box>
+  
+              {/* ------------------------------------------- */}
+              {/* End Page */}
+              {/* ------------------------------------------- */}
+            </Container>
+            <Customizer />
+          </PageWrapper>
+        </Box>
+      </MainWrapper>
+    );
+  }
+  return <>{redirect("/auth/auth1/login")}</>;
 
-            {/* ------------------------------------------- */}
-            {/* End Page */}
-            {/* ------------------------------------------- */}
-          </Container>
-          <Customizer />
-        </PageWrapper>
-      </Box>
-    </MainWrapper>
-  );
 }

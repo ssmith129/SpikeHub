@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Grid from '@mui/material/Grid2';
 import Stack from '@mui/material/Stack';
 import { Theme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
@@ -17,7 +17,7 @@ export default function Login() {
   const customizer = useSelector((state: AppState) => state.customizer);
 
   return (
-    <PageContainer title="Login Page" description="this is Sample page">
+    (<PageContainer title="Login Page" description="this is Sample page">
       <Box display="flex" alignItems="center">
         <Box
           position="relative"
@@ -71,7 +71,7 @@ export default function Login() {
                   xs: "0 15px",
                 },
                 boxShadow: "0 2px 30px 15px rgba(37,83,185,.1)",
-                backgroundColor: (theme:any)=>theme.palette.mode==="light"?"white":"#111c2d",
+                backgroundColor: "white",
                 maxWidth: {
                   xs: "340px",
                   sm: "500px",
@@ -100,7 +100,11 @@ export default function Login() {
                   sx={{ mb: 4 }}
                 >
                   {lgUp ? (
-                    <Grid item xs={12} sm={6}>
+                    <Grid
+                      size={{
+                        xs: 12,
+                        sm: 6
+                      }}>
                       <Avatar
                         src="/images/backgrounds/login3-bg.png"
                         alt="login"
@@ -116,7 +120,12 @@ export default function Login() {
                   ) : (
                     ""
                   )}
-                  <Grid item xs={12} sm={12} lg={6}>
+                  <Grid
+                    size={{
+                      xs: 12,
+                      sm: 12,
+                      lg: 6
+                    }}>
                     <Box
                       sx={{
                         marginLeft: {
@@ -166,6 +175,6 @@ export default function Login() {
           </Box>
         </Box>
       </Box>
-    </PageContainer>
+    </PageContainer>)
   );
 }

@@ -7,16 +7,18 @@ import { ThemeSettings } from "@/utils/theme/Theme";
 import { useSelector } from 'react-redux';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { AppState } from "@/store/store";
+import { SessionProvider } from "next-auth/react"
 import "@/utils/i18n";
 import "@/app/api/index";
 
 
-const MyApp = ({ children }: { children: React.ReactNode }) => {
+const MyApp = ({ children,session }: { children: React.ReactNode,session:any }) => {
     const theme = ThemeSettings();
     const customizer = useSelector((state: AppState) => state.customizer);
 
     return (
         <>
+        <SessionProvider session={session}>
             <AppRouterCacheProvider options={{ enableCssLayer: true }}>
                 <ThemeProvider theme={theme}>
                     <RTL direction={customizer.activeDir}>
@@ -25,6 +27,7 @@ const MyApp = ({ children }: { children: React.ReactNode }) => {
                     </RTL>
                 </ThemeProvider>
             </AppRouterCacheProvider>
+        </SessionProvider>
         </>
     );
 };

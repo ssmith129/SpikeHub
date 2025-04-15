@@ -7,6 +7,7 @@ import { Theme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { styled } from '@mui/material/styles';
+import { Icon } from "@iconify/react";
 import { useSelector, useDispatch } from "@/store/hooks";
 import { toggleMobileSidebar, setDarkMode } from "@/store/customizer/CustomizerSlice";
 import { IconMenu2 } from "@tabler/icons-react";
@@ -17,7 +18,6 @@ import Search from "../../vertical/header/Search";
 import Language from "../../vertical/header/Language";
 import Logo from "../../shared/logo/Logo";
 import { AppState } from "@/store/store";
-import { Icon } from "@iconify/react";
 
 export default function Header() {
   const lgDown = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));

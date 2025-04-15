@@ -1,4 +1,3 @@
-'use client'
 import Card from '@mui/material/Card';
 import { useTheme } from '@mui/material/styles';
 import { AppState } from '@/store/store';
